@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
+  <!-- Replace the content tag with appropriate information -->
+  <meta name="description" content="Scaling Up 3D Scene Reconstruction with Synthesized Data">
+  <meta property="og:title" content="MegaSynth"/>
+  <meta property="og:description" content="Scaling Up Feed-forward 3D Scene Reconstruction with Synthesized Data"/>
+  <meta property="og:url" content="https://hwjiang1510.github.io/MegaSynth"/>
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
+  <meta property="og:image" content="static/image/icon.png" />
+  <meta property="og:image:width" content="600"/>
+  <meta property="og:image:height" content="600"/>
+
+
+  <meta name="twitter:title" content="MegaSynth">
+  <meta name="twitter:description" content="Scaling Up Feed-forward 3D Scene Reconstruction with Synthesized Data">
+  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
+  <meta name="twitter:image" content="static/image/icon.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Keywords for your paper to be indexed by-->
+  <meta name="keywords" content="3D scene reconstruction, large reconstruction models, synthesized data">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <title>MegaSynth</title>
+  <link rel="icon" type="image/x-icon" href="static/image/icon.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title" style="margin-bottom:0rem">MegaSynth</h1>
+            <h3 class="title is-3 publication-title">Scaling Up 3D Scene Reconstruction with Synthesized Data</h3>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              <span class="author-block">
+                <a href="https://hwjiang1510.github.io/" target="_blank">Hanwen Jiang</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://zexiangxu.github.io/" target="_blank">Zexiang Xu</a><sup>2</sup>,
+              </span>
+                    <span class="author-block">
+                      <a href="https://desaixie.github.io/" target="_blank">Desai Xie</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://chenziwe.com/" target="_blank">Ziwen Chen</a><sup>4</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://haian-jin.github.io/" target="_blank">Haian Jin</a><sup>5</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://luanfujun.com/" target="_blank">Fujun Luan</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://zhixinshu.github.io/" target="_blank">Zhixin Shu</a><sup>2</sup>,
+              </span>
+              <br>
+              <span class="author-block">
+                      <a href="https://kai-46.github.io/website/" target="_blank">Kai Zhang</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://sai-bi.github.io/" target="_blank">Sai Bi</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="http://www.sunxin.name/" target="_blank">Xin Sun</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://gujiuxiang.com/" target="_blank">Jiuxiang Gu</a><sup>2</sup>,
+              </span>
+                    <span class="author-block">
+                      <a href="https://www.cs.utexas.edu/~huangqx/index.html" target="_blank">Qixing Huang</a><sup>1</sup>,
+              </span>
+                    <span class="author-block">
+                      <a href="https://geopavlakos.github.io/" target="_blank">Georgios Pavlakos</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                      <a href="https://www.cs.unc.edu/~airsplay/" target="_blank">Hao Tan</a><sup>2</sup>
+              </span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block"><sup>1</sup>UT Austin</span>,
+              <span class="author-block"><sup>2</sup>Adobe Research</span>,
+              <br>
+              <span class="author-block"><sup>3</sup>Stony Brook University</span>,
+              <span class="author-block"><sup>4</sup>Oregon State University</span>,
+              <span class="author-block"><sup>5</sup>Cornell University</span>
+            </div>
+            <br>
+                  <!-- Github link -->
+                  <span class="link-block">
+                    <a href="https://github.com/hwjiang1510/MegaSynth" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+			  
+			  <!-- Demo abstract Link -->
+                <span class="link-block">
+                  <a href="https://huggingface.co/datasets/hwjiang/MegaSynth" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="static/image/hugging_face.png" alt="Hugging Face Icon" style="width: 1em; height: 1em;">
+                  </span>
+                  <span>Data (coming soon)</span>
+                </a>
+              </span>
+			  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Teaser video-->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video poster="" id="tree" autoplay muted loop height="100%">
+        <!-- Your video here -->
+        <source src="static/video/demo_megasynth_processed.mp4"
+        type="video/mp4">
+      </video>
+      <br>
+      <br>
+      <div class="notification is-centered is-info is-rounded" style="text-align: center; padding-bottom: 5px; padding-top: 5px; background-color: #80C4E9;">
+        <h6 style="text-align: center; color:rgb(0, 0, 0)"><strong>TL;DR</strong>: Multi-view reconstruction is largely <b>non-semantic</b>,<br>enabling scalable training with <b>non-semantic synthesized data</b>.</h6>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview</h2>
+        <div class="content has-text-justified">
+		  <div class="box m-5">
+            <div class="content has-text-centered">
+                <img src="static/image/overview.png" width="100%" alt="overview" />
+            </div>
+            </div>
+          <p>
+            We propose scaling up 3D scene reconstruction by training with <b>synthesized data</b>. 
+            At the core of our work is <b>MegaSynth</b>, a 3D dataset comprising <b>700K scenes</b> (which takes only <b>3 days</b> to generate) - 70 times larger than the prior real dataset DL3DV - dramatically scaling the training data. 
+            To enable scalable data generation, our key idea is <b>eliminating semantic information</b>, removing the need to model complex semantic priors such as object affordances and scene composition. 
+            Instead, we model scenes with basic spatial structures and geometry primitives, offering scalability.
+            Besides, we control data complexity to facilitate training while loosely aligning it with real-world data distribution to benefit real-world generalization. 
+            We explore training LRMs with both MegaSynth and available real data, enabling <b>wide-coverage scene reconstruction within 0.3 second</b>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Data Generation</h2>
+        <hr>
+        <div class="content has-text-justified">
+            <p>
+              Megasynth synthesizes data using <b>non-learning-based</b> procedual generation.
+              We first generate the scene floor plan, where each 3D box represents a shape and different colors represent different object types. 
+              We compose shape primitives into objects with geometry augmentations, where these objects further compose the scene. 
+              We randomize the texture and lighting, and generate random cameras for rendering.
+              MegaSynth denefits 3D reconstruction model with: (1) <b>scalability</b>, as the procedual data generation is efficient; (2) <b>controllability</b>, as we have fully control of data complexity, distribution, and alignment with real-world; (3) <b>diversity</b>, with randomized geometry, lighting, material and spatial structures; (4) <b>accurate meta-data</b>, which provides geometry supervision and stablizes training.
+            </p>
+            <div class="box m-5">
+            <div class="content has-text-centered">
+                <img src="static/image/data_pipeline.png" width="100%" alt="overview" />
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+      <div class="column is-four-fifths"> 
+        <h2 class="title is-3">Comparison with Baselines</h2>
+        <hr>
+        <div class="content has-text-justified">
+            <p>
+				      We compare with baselines on 3 testing datasets, including DL3DV (real, in-domain), Hypersim (synthetic, out-of-domain, indoor), and MipNeRF360 + Tanks & Temples (real, out-of-domain, outdoor). We perform experiments with two different models (GS-LRM and Long-LRM) under two settings (resolution 128 and 256). We show benefits of using MegaSynth against using DL3DV only.
+			      </p>
+        </div>
+        <h2 class="title is-4">Qualiative Comparison</h2>
+        <div class="content has-text-justified">
+            <p>
+              By using MegaSynth, our results demonstrates consistent 1.2 to 1.8 dB PSNR gains across different experiment settings, base models and testing datasets.
+            </p>
+        </div>
+            <div class="box m-5">
+                <div class="content has-text-centered">
+                    <img src="static/image/results_bar.png" width="100%" alt="overview" />
+                </div>
+            </div>
+			  <hr>
+        <h2 class="title is-4">Qualiative Comparison</h2>
+          <div class="content has-text-justified">
+            <p>
+              We include results of Long-LRM at resolution 256 on on-domain DL3DV and out-of-domain data.
+              For DL3DV, with our MegaSynth, the model performs better on thin structures (e.g., middle left), complicated lighting (e.g., top left), and cluttered scenes (e.g., middle right).
+            </p>
+          </div>
+          <div style="height:400px;overflow:scroll;padding: 0px 0px;">
+            <img src="static/image/vis_1.png" alt="poses"><br>
+          </div>
+          <br>
+          <div class="content has-text-justified">
+            <p>
+              For out-of-domain data, we include results on Hypersim and MipNeRF360 in the first and second rows, respectively.
+              With our MegaSynth, the model performs better on strong lighting (e.g., top left), thin structure (e.g., middle left), and complicated materials (e.g., bottom right).
+            </p>
+          </div>
+          <div style="height:400px;overflow:scroll;padding: 0px 0px;">
+            <img src="static/image/vis_2.png" alt="poses"><br>
+          </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-full-width has-text-centered"> -->
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Interestingly, 3D reconstruction is almost non-semantic!</h2>
+        <hr>
+        <div class="content has-text-justified">
+            <p>
+              We experiment with using only MegaSynth for training GS-LRM (res-128), which demonstrates comparable results to using real data. 
+              The results are consistent over different number of input images. 
+              This phenomenon implies that <b>3D reconstruction requires nearly no semantic information</b>, akin to the success of non-semantic optimization-based methods, i.e., COLMAP and NeRF, and showing that <b>3D reconstruction is a low-level task!</b>
+            </p>
+            <div class="box m-5">
+            <div class="content has-text-centered">
+                <img src="static/image/megasynth_only.jpeg" width="100%" alt="scaling" />
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+		@article{jiang2024megasynth,
+		   title={MegaSynth: Scaling Up 3D Scene Reconstruction with Synthesized Data},
+		   author={Jiang, Hanwen and Xu, Zexiang and Xie, Desai and Chen, Ziwen and Jin, Haian and Luan, Fujun and Shu, Zhixin and Zhang, Kai and Bi, Sai and Sun, Xin and Gu, Jiuxiang and Huang, Qixing and Pavlakos, Georgios and Tan, Hao},
+		   booktitle={arXiv preprint arXiv:},
+		   year={2024},
+		}
+	  </code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
