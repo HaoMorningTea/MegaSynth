@@ -6,7 +6,7 @@
 
 <div align="center">
     <a href="https://hwjiang1510.github.io/MegaSynth/"><strong>Project Page</strong></a> |
-    <a href="https://arxiv.org/abs/"><strong>Paper</strong></a> | 
+    <a href="https://arxiv.org/abs/2412.14166"><strong>Paper</strong></a> | 
     <a href="https://huggingface.co/datasets/hwjiang/MegaSynth"><strong>Dataset</strong></a>
 </div>
 
@@ -44,7 +44,7 @@ If you find this code useful, please consider citing:
 @article{jiang2024megasynth,
   title={MegaSynth: Scaling Up 3D Scene Reconstruction with Synthesized Data},
   author={Jiang, Hanwen and Xu, Zexiang and Xie, Desai and Chen, Ziwen and Jin, Haian and Luan, Fujun and Shu, Zhixin and Zhang, Kai and Bi, Sai and Sun, Xin and Gu, Jiuxiang and Huang, Qixing and Pavlakos, Georgios and Tan, Hao},
-  booktitle={arXiv preprint arXiv:},
+  booktitle={arXiv preprint arXiv:2412.14166},
   year={2024},
 }
 
