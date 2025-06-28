@@ -12,6 +12,7 @@ import shutil
 import time
 import uuid
 import json
+from datetime import datetime
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from datasets import load_dataset
@@ -36,12 +37,22 @@ WALL_OPTIONS = {'xy_front': ['x', 'y'], 'xy_back': ['x', 'y'],
                 'yz_top': ['y', 'z'], 'yz_bottom': ['y', 'z']}
 
 # possibility of different number of objects in each box
+# ORIGINAL CODE: Creates complex multi-primitive objects
+# CUBE_TO_SHAPE = {
+#     'lB': {"sub_obj_nums": [4, 5, 6, 7, 8, 9], "sub_obj_num_poss": [5, 7, 10, 7, 5]},   
+#     'sB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
+#     'rB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
+#     'wB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
+#     'fB': {"sub_obj_nums": [1, 2, 3], "sub_obj_num_poss": [2, 1, 1]},
+# }
+
+# MODIFIED: Force each bounding box to contain exactly 1 primitive (single cube per box)
 CUBE_TO_SHAPE = {
-    'lB': {"sub_obj_nums": [4, 5, 6, 7, 8, 9], "sub_obj_num_poss": [5, 7, 10, 7, 5]},   
-    'sB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
-    'rB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
-    'wB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
-    'fB': {"sub_obj_nums": [1, 2, 3], "sub_obj_num_poss": [2, 1, 1]},
+    'lB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},   
+    'sB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+    'rB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+    'wB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+    'fB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
 }
 CUBE_TO_EDGE_COLOR = {
     'lB': 'r', 
@@ -611,7 +622,12 @@ class Scene(Shape):
             }
             shape_parameters['sub_obj_num'] = sub_obj_num
             shape_parameters['sub_objs'] = [{} for _ in range(sub_obj_num)]
-            ms = MultiShape_hanwen(sub_obj_num, candShapes=candShapes, smoothPossibility=smooth_probability)
+            # ORIGINAL CODE: Uses all primitive types (ellipsoids, cubes, cylinders) with smoothing
+            # ms = MultiShape_hanwen(sub_obj_num, candShapes=candShapes, smoothPossibility=smooth_probability)
+            
+            # MODIFIED: Force only cubes (candShapes=[1]), no smoothing, no rotation/translation, equal dimensions
+            ms = MultiShape_hanwen(sub_obj_num, candShapes=[1], smoothPossibility=0.0, 
+                                  axisRange=(1.0, 1.0), rotateRange=(0, 0), translateRangeRate=(0, 0))
             sub_objs_vals = list(ms.genShape(no_hf=no_hf, matIdx_start=cur_matIdx_start))
             if bPermuteMat:
                 ms.permuteMatIds()
@@ -628,12 +644,15 @@ class Scene(Shape):
 
         self._add_wall_to_multiShape(cur_matIdx_start)
 
-        new_uuid = str(uuid.uuid4())
-        subFolder = Path(outFolder) / new_uuid
+        # new_uuid = str(uuid.uuid4())
+        # subFolder = Path(outFolder) / new_uuid
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Format: YYYYMMDD_HHMMSS_mmm
+        subFolder = Path(outFolder) / timestamp
         subFolder.mkdir(parents=True, exist_ok=True)
         output_path = subFolder / 'object.obj'
         subFolder = str(subFolder.resolve())
-        return_uuid = new_uuid
+        # return_uuid = new_uuid
+        return_uuid = timestamp
 
         # save .obj file and sample texture
         max_dim, material_ids = self.genObj(subFolder + "/object.obj", mat_path, bMat=True, bComputeNormal=True, bScaleMesh=bScaleMesh, bMaxDimRange=bMaxDimRange)
@@ -987,7 +1006,10 @@ if __name__ == '__main__':
                                                                               uuid_str=uuid_str, 
                                                                               candShapes=[0,1,2], 
                                                                               smooth_probability=smooth_probability, 
-                                                                              no_hf=no_hf, 
+                                                                              # ORIGINAL: Uses command-line argument for height field control
+                                                                              # no_hf=no_hf, 
+                                                                              # MODIFIED: Force disable height fields to keep cubes perfectly flat
+                                                                              no_hf=True, 
                                                                               bPermuteMat=bPermuteMat, 
                                                                               bScaleMesh=bScaleMesh, 
                                                                               bMaxDimRange=[0.3, 0.45]

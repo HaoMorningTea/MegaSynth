@@ -13,6 +13,7 @@ import random
 import shutil
 import time
 import uuid
+from datetime import datetime
 import json
 from datasets import load_dataset
 from PIL import ImageFile
@@ -1170,9 +1171,14 @@ def createVarObjShapes(outFolder, shapeIds, mat_path, uuid_str='', sub_obj_nums=
         shape_parameters['sub_objs'] = [{} for _ in range(sub_obj_num)]
         print(f'i: {i}, sub_obj_num: {sub_obj_num}')
         ms = MultiShape(sub_obj_num, candShapes=candShapes, smoothPossibility=smooth_probability)
-        # create a folder for each shape, with a uuid name
-        new_uuid = str(uuid.uuid4())
-        subFolder = Path(outFolder) / new_uuid / 'shape'
+        
+        # # create a folder for each shape, with a uuid name
+        # new_uuid = str(uuid.uuid4())
+        # subFolder = Path(outFolder) / new_uuid / 'shape'
+        
+        # create a folder for each shape, with a timestamp name
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Format: YYYYMMDD_HHMMSS_mmm
+        subFolder = Path(outFolder) / timestamp / 'shape'
         subFolder.mkdir(parents=True, exist_ok=True)
         output_paths.append(subFolder / 'object.obj')
         subFolder = str(subFolder.resolve())

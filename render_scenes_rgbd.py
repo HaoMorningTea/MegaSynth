@@ -19,6 +19,7 @@ from multiprocessing import cpu_count
 import tempfile
 import uuid
 import augment_shape
+from datetime import datetime
 import copy
 from mathutils import Euler, Vector, Matrix
 import math
@@ -116,7 +117,9 @@ raw_args = copy.deepcopy(args)
 
 # Set up temp dir
 print(f"old temp_dir: {tempfile.gettempdir()}")
-temp_dir = os.path.join(args.local_cache_dir, "tmp", str(uuid.uuid4()))
+# temp_dir = os.path.join(args.local_cache_dir, "tmp", str(uuid.uuid4()))
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Format: YYYYMMDD_HHMMSS_mmm
+temp_dir = os.path.join(args.local_cache_dir, "tmp", timestamp)
 os.makedirs(temp_dir, exist_ok=True)
 tempfile.tempdir = temp_dir
 print(f"new temp_dir: {tempfile.gettempdir()}")
