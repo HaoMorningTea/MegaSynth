@@ -623,15 +623,15 @@ class Scene(Shape):
             shape_parameters['sub_obj_num'] = sub_obj_num
             shape_parameters['sub_objs'] = [{} for _ in range(sub_obj_num)]
             # ORIGINAL CODE: Uses all primitive types (ellipsoids, cubes, cylinders) with smoothing
-            # ms = MultiShape_hanwen(sub_obj_num, candShapes=candShapes, smoothPossibility=smooth_probability)
+            ms = MultiShape_hanwen(sub_obj_num, candShapes=candShapes, smoothPossibility=smooth_probability)
             
             # MODIFIED: Force only cubes (candShapes=[1]), no smoothing, no rotation/translation, equal dimensions
             # ms = MultiShape_hanwen(sub_obj_num, candShapes=[1], smoothPossibility=0.0, 
             #                       axisRange=(1.0, 1.0), rotateRange=(0, 0), translateRangeRate=(0, 0))
             
             # CHANGE TO (uses ellipsoids with variation):
-            ms = MultiShape_hanwen(sub_obj_num, candShapes=[0], smoothPossibility=0.8, 
-                                axisRange=(0.5, 1.5), rotateRange=(0, 180), heightRangeRate=(0.1, 0.4), translateRangeRate=(0, 0.3))
+            # ms = MultiShape_hanwen(sub_obj_num, candShapes=[0], smoothPossibility=0.8, 
+            #                     axisRange=(0.5, 1.5), rotateRange=(0, 180), heightRangeRate=(0.1, 0.4), translateRangeRate=(0, 0.3))
 
             sub_objs_vals = list(ms.genShape(no_hf=no_hf, matIdx_start=cur_matIdx_start))
             if bPermuteMat:
