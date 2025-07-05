@@ -37,23 +37,23 @@ WALL_OPTIONS = {'xy_front': ['x', 'y'], 'xy_back': ['x', 'y'],
                 'yz_top': ['y', 'z'], 'yz_bottom': ['y', 'z']}
 
 # possibility of different number of objects in each box
-# ORIGINAL CODE: Creates complex multi-primitive objects
-# CUBE_TO_SHAPE = {
-#     'lB': {"sub_obj_nums": [4, 5, 6, 7, 8, 9], "sub_obj_num_poss": [5, 7, 10, 7, 5]},   
-#     'sB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
-#     'rB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
-#     'wB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
-#     'fB': {"sub_obj_nums": [1, 2, 3], "sub_obj_num_poss": [2, 1, 1]},
-# }
-
-# MODIFIED: Force each bounding box to contain exactly 1 primitive (single cube per box)
+# Creates complex multi-primitive objects
 CUBE_TO_SHAPE = {
-    'lB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},   
-    'sB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
-    'rB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
-    'wB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
-    'fB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+    'lB': {"sub_obj_nums": [4, 5, 6, 7, 8, 9], "sub_obj_num_poss": [5, 7, 10, 7, 5]},   
+    'sB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
+    'rB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
+    'wB': {"sub_obj_nums": [2, 3, 4, 5], "sub_obj_num_poss": [2, 3, 2, 1]},
+    'fB': {"sub_obj_nums": [1, 2, 3], "sub_obj_num_poss": [2, 1, 1]},
 }
+
+# # MODIFIED: Force each bounding box to contain exactly 1 primitive (single cube per box)
+# CUBE_TO_SHAPE = {
+#     'lB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},   
+#     'sB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+#     'rB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+#     'wB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+#     'fB': {"sub_obj_nums": [1], "sub_obj_num_poss": [1]},
+# }
 CUBE_TO_EDGE_COLOR = {
     'lB': 'r', 
     'sB': 'g', 
@@ -626,8 +626,13 @@ class Scene(Shape):
             # ms = MultiShape_hanwen(sub_obj_num, candShapes=candShapes, smoothPossibility=smooth_probability)
             
             # MODIFIED: Force only cubes (candShapes=[1]), no smoothing, no rotation/translation, equal dimensions
-            ms = MultiShape_hanwen(sub_obj_num, candShapes=[1], smoothPossibility=0.0, 
-                                  axisRange=(1.0, 1.0), rotateRange=(0, 0), translateRangeRate=(0, 0))
+            # ms = MultiShape_hanwen(sub_obj_num, candShapes=[1], smoothPossibility=0.0, 
+            #                       axisRange=(1.0, 1.0), rotateRange=(0, 0), translateRangeRate=(0, 0))
+            
+            # CHANGE TO (uses ellipsoids with variation):
+            ms = MultiShape_hanwen(sub_obj_num, candShapes=[0], smoothPossibility=0.8, 
+                                axisRange=(0.5, 1.5), rotateRange=(0, 180), heightRangeRate=(0.1, 0.4), translateRangeRate=(0, 0.3))
+
             sub_objs_vals = list(ms.genShape(no_hf=no_hf, matIdx_start=cur_matIdx_start))
             if bPermuteMat:
                 ms.permuteMatIds()
@@ -985,7 +990,22 @@ if __name__ == '__main__':
     seed_everything(args.seed)
 
     project_dir = args.project_dir
-    out_dir = f'{project_dir}/scenes'
+    # out_dir = f'{project_dir}/scenes'
+    scenes_dir = os.path.join(project_dir, 'scenes')
+    mats_dir   = os.path.join(project_dir, 'mats')
+    os.makedirs(scenes_dir, exist_ok=True)
+    os.makedirs(mats_dir,   exist_ok=True)
+    
+    original_mat_path = get_matsynth_material(mats_dir)
+
+    import shutil
+    mat_folder = os.path.basename(original_mat_path)
+    desired_mat_path = os.path.join(mats_dir, mat_folder)
+    if os.path.abspath(original_mat_path) != os.path.abspath(desired_mat_path):
+        shutil.move(original_mat_path, desired_mat_path)
+    mat_path = desired_mat_path
+    
+    
     num_scenes = args.num_scenes
     dataset = 'rgb2x'
     uuid_str = ''
@@ -995,21 +1015,16 @@ if __name__ == '__main__':
     bPermuteMat = False
     smooth_probability = args.smooth_probability
 
-    mat_path = get_matsynth_material(out_dir)
-
     for i in range(num_scenes):
         scene = Scene()
         new_uuid = i
 
-        output_path, all_shape_parameters, new_uuid = scene._generate_objects(outFolder=out_dir,
+        output_path, all_shape_parameters, new_uuid = scene._generate_objects(outFolder=scenes_dir,
                                                                               mat_path=mat_path,
                                                                               uuid_str=uuid_str, 
                                                                               candShapes=[0,1,2], 
-                                                                              smooth_probability=smooth_probability, 
-                                                                              # ORIGINAL: Uses command-line argument for height field control
-                                                                              # no_hf=no_hf, 
-                                                                              # MODIFIED: Force disable height fields to keep cubes perfectly flat
-                                                                              no_hf=True, 
+                                                                              smooth_probability=smooth_probability,
+                                                                              no_hf=no_hf, 
                                                                               bPermuteMat=bPermuteMat, 
                                                                               bScaleMesh=bScaleMesh, 
                                                                               bMaxDimRange=[0.3, 0.45]
